@@ -1,3 +1,6 @@
+// Code from "Median Filtering is Equivalent to Sorting"
+// by Jukka Suomela
+// see http://arxiv.org/pdf/1406.1717v1.pdf
 package median
 
 import (
