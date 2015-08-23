@@ -3,6 +3,7 @@ package median
 import (
 	"fmt"
 	"math"
+	"math/rand"
 	"testing"
 )
 
@@ -23,3 +24,30 @@ func _TestRollingMedianWithNaN(t *testing.T) {
 	fmt.Println(exp)
 	fmt.Println(rm)
 }
+
+func benchAlgo(size int, h int, b *testing.B) {
+	array := make([]float64, 0, size)
+	for i := 0; i < size; i++ {
+		array = append(array, rand.Float64())
+	}
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		RollingMedian(h, array)
+	}
+}
+
+func BenchmarkAlgo_100_2(b *testing.B)     { benchAlgo(100, 2, b) }
+func BenchmarkAlgo_100_4(b *testing.B)     { benchAlgo(100, 4, b) }
+func BenchmarkAlgo_1000_2(b *testing.B)    { benchAlgo(1000, 2, b) }
+func BenchmarkAlgo_1000_4(b *testing.B)    { benchAlgo(1000, 4, b) }
+func BenchmarkAlgo_10000_2(b *testing.B)   { benchAlgo(10000, 2, b) }
+func BenchmarkAlgo_10000_4(b *testing.B)   { benchAlgo(10000, 4, b) }
+func BenchmarkAlgo_10000_6(b *testing.B)   { benchAlgo(10000, 6, b) }
+func BenchmarkAlgo_10000_8(b *testing.B)   { benchAlgo(10000, 8, b) }
+func BenchmarkAlgo_100000_2(b *testing.B)  { benchAlgo(100000, 2, b) }
+func BenchmarkAlgo_100000_4(b *testing.B)  { benchAlgo(100000, 4, b) }
+func BenchmarkAlgo_100000_6(b *testing.B)  { benchAlgo(100000, 6, b) }
+func BenchmarkAlgo_100000_8(b *testing.B)  { benchAlgo(100000, 8, b) }
+func BenchmarkAlgo_100000_10(b *testing.B) { benchAlgo(100000, 10, b) }
+func BenchmarkAlgo_100000_12(b *testing.B) { benchAlgo(100000, 12, b) }
+func BenchmarkAlgo_100000_14(b *testing.B) { benchAlgo(100000, 14, b) }

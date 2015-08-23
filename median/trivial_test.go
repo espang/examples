@@ -2,6 +2,7 @@ package median
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -29,6 +30,29 @@ func TestTrivial(t *testing.T) {
 	fmt.Println(rm)
 }
 
-func BenchTrivial(b *testing.B) {
-
+func benchTrivial(size int, h int, b *testing.B) {
+	array := make([]float64, 0, size)
+	for i := 0; i < size; i++ {
+		array = append(array, rand.Float64())
+	}
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		RollingMedianTrivial(h, array)
+	}
 }
+
+func BenchmarkTrivial_100_2(b *testing.B)     { benchTrivial(100, 2, b) }
+func BenchmarkTrivial_100_4(b *testing.B)     { benchTrivial(100, 4, b) }
+func BenchmarkTrivial_1000_2(b *testing.B)    { benchTrivial(1000, 2, b) }
+func BenchmarkTrivial_1000_4(b *testing.B)    { benchTrivial(1000, 4, b) }
+func BenchmarkTrivial_10000_2(b *testing.B)   { benchTrivial(10000, 2, b) }
+func BenchmarkTrivial_10000_4(b *testing.B)   { benchTrivial(10000, 4, b) }
+func BenchmarkTrivial_10000_6(b *testing.B)   { benchTrivial(10000, 6, b) }
+func BenchmarkTrivial_10000_8(b *testing.B)   { benchTrivial(10000, 8, b) }
+func BenchmarkTrivial_100000_2(b *testing.B)  { benchTrivial(100000, 2, b) }
+func BenchmarkTrivial_100000_4(b *testing.B)  { benchTrivial(100000, 4, b) }
+func BenchmarkTrivial_100000_6(b *testing.B)  { benchTrivial(100000, 6, b) }
+func BenchmarkTrivial_100000_8(b *testing.B)  { benchTrivial(100000, 8, b) }
+func BenchmarkTrivial_100000_10(b *testing.B) { benchTrivial(100000, 10, b) }
+func BenchmarkTrivial_100000_12(b *testing.B) { benchTrivial(100000, 12, b) }
+func BenchmarkTrivial_100000_14(b *testing.B) { benchTrivial(100000, 14, b) }
