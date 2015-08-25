@@ -5,7 +5,7 @@ package fib
 
 func fib1(n int) int {
 	if n < 1 {
-		panic("fib not defined for negative numbers")
+		panic("fib not defined numbers < 1")
 	}
 	switch n {
 	case 1:
@@ -19,7 +19,7 @@ func fib1(n int) int {
 
 func fib2(n int) int {
 	if n < 1 {
-		panic("fib not defined for negative numbers")
+		panic("fib not defined for numbers < 1")
 	}
 	return fib2i(n)
 }
@@ -38,7 +38,7 @@ type recfunc func(recfunc, int) int
 
 func fib3(n int) int {
 	if n < 1 {
-		panic("fib not defined for negative numbers")
+		panic("fib not defined for numbers < 1")
 	}
 	fibs := map[int]int{
 		1: 1,
@@ -59,7 +59,7 @@ func fib3(n int) int {
 
 func fib4(n int) int {
 	if n < 1 {
-		panic("fib not defined for negative numbers")
+		panic("fib not defined for numbers < 1")
 	}
 	if n == 1 || n == 2 {
 		return 1
