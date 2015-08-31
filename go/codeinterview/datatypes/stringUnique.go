@@ -1,5 +1,5 @@
 // Given a string:
-// Write function that returns wether all letters ocure at most one time
+// Write function that returns wether all letters occure at most one time
 package datatypes
 
 // implement isUnique
