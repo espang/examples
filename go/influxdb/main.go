@@ -23,12 +23,13 @@ func write_in_batches(data []string, client *client.Client, size int, db string,
 		}
 		index = index + size
 	}
-	wg.Done()
 	seelog.Infof("Write done in %s", time.Since(start))
+	wg.Done()
+
 }
 
 func main() {
-
+	defer seelog.Flush()
 	url, err := url.Parse("http://localhost:8086")
 	if err != nil {
 		panic(err)
@@ -67,6 +68,6 @@ func main() {
 
 	wg.Wait()
 
-	seelog.Infof("Took %s to write %d points", time.Since(start), len(data))
-	defer seelog.Flush()
+	seelog.Infof("Took %s to write 4 times %d points", time.Since(start), len(data))
+
 }
