@@ -1,0 +1,12 @@
+# Read all Lines
+#
+# All lines not starting with a # will be processed
+#
+# Expecting 2 entries per line seperated by a single space
+# First entry is the absolute path at the ftp server
+# Second entry is a comma-seperated list of measurement names
+# in influxdb
+#
+/Marktdaten/Wetter/beispiel.csv Temperatur,Radiation,Humidity
+line2 a
+line3 b
