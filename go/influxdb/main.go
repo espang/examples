@@ -16,7 +16,11 @@ func write_in_batches(data []string, client *client.Client, size int, db string,
 	start := time.Now()
 	n := len(data)
 	for index := 0; index < n; {
-		txt := strings.Join(data[index:index+size], "\n")
+		end := index + size
+		if end >= n {
+			end = n - 1
+		}
+		txt := strings.Join(data[index:end], "\n")
 		_, err := client.WriteLineProtocol(txt, db, "", "", "")
 		if err != nil {
 			panic(err)
