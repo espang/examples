@@ -64,13 +64,29 @@ func benchmarkFib1(f func(int) int, i int, b *testing.B) {
 }
 
 func BenchmarkFib1_1(b *testing.B)  { benchmarkFib1(fib1, 1, b) }
+func BenchmarkFib1_2(b *testing.B)  { benchmarkFib1(fib1, 2, b) }
+func BenchmarkFib1_3(b *testing.B)  { benchmarkFib1(fib1, 3, b) }
+func BenchmarkFib1_4(b *testing.B)  { benchmarkFib1(fib1, 4, b) }
 func BenchmarkFib1_5(b *testing.B)  { benchmarkFib1(fib1, 5, b) }
 func BenchmarkFib1_10(b *testing.B) { benchmarkFib1(fib1, 10, b) }
 func BenchmarkFib1_15(b *testing.B) { benchmarkFib1(fib1, 15, b) }
 func BenchmarkFib1_20(b *testing.B) { benchmarkFib1(fib1, 20, b) }
 func BenchmarkFib1_30(b *testing.B) { benchmarkFib1(fib1, 30, b) }
 
+func BenchmarkFib2_1(b *testing.B)  { benchmarkFib1(fib2, 1, b) }
+func BenchmarkFib2_2(b *testing.B)  { benchmarkFib1(fib2, 2, b) }
+func BenchmarkFib2_3(b *testing.B)  { benchmarkFib1(fib2, 3, b) }
+func BenchmarkFib2_4(b *testing.B)  { benchmarkFib1(fib2, 4, b) }
+func BenchmarkFib2_5(b *testing.B)  { benchmarkFib1(fib2, 5, b) }
+func BenchmarkFib2_10(b *testing.B) { benchmarkFib1(fib2, 10, b) }
+func BenchmarkFib2_15(b *testing.B) { benchmarkFib1(fib2, 15, b) }
+func BenchmarkFib2_20(b *testing.B) { benchmarkFib1(fib2, 20, b) }
+func BenchmarkFib2_30(b *testing.B) { benchmarkFib1(fib2, 30, b) }
+
 func BenchmarkFib3_1(b *testing.B)  { benchmarkFib1(fib3, 1, b) }
+func BenchmarkFib3_2(b *testing.B)  { benchmarkFib1(fib3, 2, b) }
+func BenchmarkFib3_3(b *testing.B)  { benchmarkFib1(fib3, 3, b) }
+func BenchmarkFib3_4(b *testing.B)  { benchmarkFib1(fib3, 4, b) }
 func BenchmarkFib3_5(b *testing.B)  { benchmarkFib1(fib3, 5, b) }
 func BenchmarkFib3_10(b *testing.B) { benchmarkFib1(fib3, 10, b) }
 func BenchmarkFib3_15(b *testing.B) { benchmarkFib1(fib3, 15, b) }
@@ -78,6 +94,9 @@ func BenchmarkFib3_20(b *testing.B) { benchmarkFib1(fib3, 20, b) }
 func BenchmarkFib3_30(b *testing.B) { benchmarkFib1(fib3, 30, b) }
 
 func BenchmarkFib4_1(b *testing.B)  { benchmarkFib1(fib4, 1, b) }
+func BenchmarkFib4_2(b *testing.B)  { benchmarkFib1(fib4, 2, b) }
+func BenchmarkFib4_3(b *testing.B)  { benchmarkFib1(fib4, 3, b) }
+func BenchmarkFib4_4(b *testing.B)  { benchmarkFib1(fib4, 4, b) }
 func BenchmarkFib4_5(b *testing.B)  { benchmarkFib1(fib4, 5, b) }
 func BenchmarkFib4_10(b *testing.B) { benchmarkFib1(fib4, 10, b) }
 func BenchmarkFib4_15(b *testing.B) { benchmarkFib1(fib4, 15, b) }

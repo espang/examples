@@ -66,8 +66,8 @@ func fib4(n int) int {
 	}
 	a := 1
 	b := 1
-	for i := 3; i <= n; i++ {
+	for i := 3; i < n; i++ {
 		a, b = b, a+b
 	}
-	return b
+	return a + b
 }
