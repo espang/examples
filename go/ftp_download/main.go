@@ -19,10 +19,14 @@ var host = flag.String("host", "", "The Ftp-Server")
 var user = flag.String("user", "", "User of ftp server")
 var pw = flag.String("pw", "", "Password of ftp server")
 var port = flag.Int("port", 21, "Port of ftp server")
-var url = flag.String("influx", "http://localhost:8086", "Url of influx")
+var surl = flag.String("influx", "", "Url of influx")
+var db = flag.String("db", "mid", "Database in influx to use")
 
 func main() {
 	defer seelog.Flush()
+
+	seelog.LoggerFromConfigAsString("formatid=\"debug\"")
+
 	flag.Parse()
 
 	cfg := FtpCfg{*host, *user, *pw, *port}
@@ -30,7 +34,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	iClient, err := NewInfluxClient(*url)
+	iClient, err := NewInfluxClient(*surl, *db)
 	if err != nil {
 		panic(err)
 	}
@@ -47,21 +51,22 @@ func main() {
 		}
 		splittedLine := strings.Split(line, space)
 		if len(splittedLine) != 2 {
-			seelog.Warnf("Line '%s' has more than one space", line)
+			seelog.Warnf("Line '%s' has not exactly one space", line)
 			continue
 		}
 		data := &FtpToInflux{splittedLine[0], strings.Split(splittedLine[1], sep)}
 		files = append(files, data)
-		seelog.Tracef("Data: %v", data)
 	}
 
 	for _, f := range files {
+		seelog.Tracef("Start with file '%s'!", f.Filename)
 		buf, err := fClient.Download(f.Filename)
 		if err != nil {
 			seelog.Warnf("Error downloading file '%s': %v", f.Filename, err)
 			continue
 		}
-		err = iClient.Write(buf, f.Measurements)
+		datas := Transform(buf)
+		err = iClient.Write(datas, f.Measurements)
 		if err != nil {
 			seelog.Warnf("Error writing Data: %v", err)
 			continue

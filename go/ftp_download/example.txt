@@ -7,6 +7,8 @@
 # Second entry is a comma-seperated list of measurement names
 # in influxdb
 #
-/Marktdaten/Wetter/beispiel.csv Temperatur,Radiation,Humidity
-line2 a
-line3 b
+/Marktdaten/Wetter/Eurowind/Weather_Eurowind_Forecast.csv Radiation_Ger,Temperatur_Ger,Humidity_Ger
+/Marktdaten/Strom/Power_Phelix_Day_Ahead.csv Dayahead_Spot
+/Marktdaten/Solar_und_Wind/Prognosen_Eurowind/Wind_Eurowind_Forecast.csv Wind_Infeed,Wind_Min,Wind_Max,Wind_Factor
+/Marktdaten/Solar_und_Wind/Prognosen_Eurowind/PV_Eurowind_Forecast.csv Solar_Infeed
+/Marktdaten/Last/Load.csv Load_Ger
