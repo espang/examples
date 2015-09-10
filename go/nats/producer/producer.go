@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"math"
 	"math/rand"
 	"os"
@@ -18,8 +19,7 @@ type Work struct {
 }
 
 func main() {
-	defer seelog.Flush()
-	seelog.Trace("Start nats worker")
+	log.Printf("Start nats producer")
 
 	nc, err := nats.Connect(nats.DefaultURL)
 	if err != nil {
@@ -30,20 +30,17 @@ func main() {
 	nc.Opts.AllowReconnect = false
 	// Report async errors.
 	nc.Opts.AsyncErrorCB = func(nc *nats.Conn, sub *nats.Subscription, err error) {
-		seelog.Errorf("NATS: Received an async error! %v\n", err)
-		os.Exit(1)
+		log.Fatalf("NATS: Received an async error! %v\n", err)
 	}
 
 	// Report a disconnect scenario.
 	nc.Opts.DisconnectedCB = func(nc *nats.Conn) {
-		seelog.Errorf("Getting behind! %d\n", nc.OutMsgs-nc.InMsgs)
-		os.Exit(1)
+		log.Fatalf("Getting behind! %d\n", nc.OutMsgs-nc.InMsgs)
 	}
 
 	ec, err := nats.NewEncodedConn(nc, nats.GOB_ENCODER)
 	if err != nil {
-		seelog.Errorf("Encoded connection: %s", err)
-		os.Exit(1)
+		log.Fatalf("Encoded connection: %s", err)
 	}
 
 	sendChannel := make(chan *Work, 20)
@@ -69,7 +66,7 @@ func main() {
 			if bytesDeltaOver {
 				time.Sleep(1 * time.Millisecond)
 			}
-			seelog.Infof("Work %d ||| bytesDelta %d", i, nc.OutBytes-nc.InBytes)
+			//log.Printf("Work %d ||| bytesDelta %d", i, nc.OutBytes-nc.InBytes)
 			sendChannel <- &Work{WorkFor: randTime, NameIn: "In", NameOut: "", Values: values}
 
 		}
@@ -81,9 +78,9 @@ func main() {
 		count++
 
 		if count%10000 == 0 {
-			seelog.Infof(" %d of %d messages back", count, math.MaxUint16)
+			log.Printf(" %d of %d messages back", count, math.MaxUint16)
 		}
 	}
-	seelog.Infof("Work done %d tasks finished", count)
-	seelog.Infof("Workload of %s, done in %s", time.Duration(total), time.Since(start))
+	log.Printf("Work done %d tasks finished", count)
+	log.Printf("Workload of %s, done in %s", time.Duration(total), time.Since(start))
 }
