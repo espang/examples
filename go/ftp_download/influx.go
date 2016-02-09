@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"strings"
 	"time"
 
-	"github.com/cihub/seelog"
 	"github.com/influxdb/influxdb/client"
 )
 
@@ -18,7 +18,7 @@ type MyInfluxClient struct {
 func NewInfluxClient(surl, db string) (*MyInfluxClient, error) {
 	url, err := url.Parse(surl)
 	if err != nil {
-		seelog.Errorf("Error parsing url: %s", err)
+		log.Printf("Error parsing url: %s", err)
 		return nil, err
 	}
 
@@ -26,7 +26,7 @@ func NewInfluxClient(surl, db string) (*MyInfluxClient, error) {
 	cfg.URL = *url
 	client, err := client.NewClient(cfg)
 	if err != nil {
-		seelog.Errorf("Error connecting to influxdb: %s", err)
+		log.Printf("Error connecting to influxdb: %s", err)
 		return nil, err
 	}
 
@@ -41,7 +41,7 @@ func (ic *MyInfluxClient) Write(datas []*Data, measures []string) error {
 	for i, d := range datas {
 		err := ic.writeSingle(d, measures[i])
 		if err != nil {
-			seelog.Warnf("Error writing %d values to %s: %v", len(d.points), measures[i], err)
+			log.Printf("Error writing %d values to %s: %v", len(d.points), measures[i], err)
 			erroneous = true
 			continue
 		}
@@ -69,12 +69,12 @@ func (ic *MyInfluxClient) writeSingle(data *Data, measure string) error {
 		txt := strings.Join(lines[index:end], "\n")
 		_, err := ic.client.WriteLineProtocol(txt, ic.db, "", "", "")
 		if err != nil {
-			seelog.Warnf("Error writing lines to influxdb: %v", err)
+			log.Printf("Error writing lines to influxdb: %v", err)
 			return err
 		}
 		index = index + size
 	}
 
-	seelog.Tracef("Took %s to write %d values to %s", time.Since(start), len(data.points), measure)
+	log.Printf("Took %s to write %d values to %s", time.Since(start), len(data.points), measure)
 	return nil
 }

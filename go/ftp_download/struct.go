@@ -2,12 +2,10 @@ package main
 
 import (
 	"bytes"
-	"os"
+	"log"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/cihub/seelog"
 )
 
 type FtpToInflux struct {
@@ -39,8 +37,7 @@ func init() {
 	var err error
 	cet, err = time.LoadLocation("CET")
 	if err != nil {
-		seelog.Errorf("Error getting CET-Local: %s", err)
-		os.Exit(1)
+		log.Fatalf("Error getting CET-Local: %s", err)
 	}
 }
 
@@ -68,7 +65,7 @@ func Transform(buf []byte) []*Data {
 		arr := bytes.Split(bline, bufSep)
 		t, err := time.ParseInLocation(layout, string(arr[0]), cet)
 		if err != nil {
-			seelog.Warnf("Could not parse timestring '%s': %s", string(arr[0]), err)
+			log.Printf("Could not parse timestring '%s': %s", string(arr[0]), err)
 			continue
 		}
 		for i, s := range arr[1:] {
@@ -78,7 +75,7 @@ func Transform(buf []byte) []*Data {
 			fs := strings.TrimRight(strings.Replace(string(s), ",", ".", 1), "\r")
 			value, err := strconv.ParseFloat(fs, 64)
 			if err != nil {
-				seelog.Warnf("Could not convert '%s' to float: %s", fs, err)
+				log.Printf("Could not convert '%s' to float: %s", fs, err)
 				continue
 			}
 			datas[i].points = append(datas[i].points, &Point{t, value})
